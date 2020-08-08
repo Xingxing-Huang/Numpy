@@ -1,0 +1,86 @@
+ simplest to me:
+
+>>> import numpy as np
+>>> l = [[1, 2, 3], [4, 5, 6], [7], [8, 9]]
+>>> print (np.concatenate(l))
+[1 2 3 4 5 6 7 8 9]
+
+
+
+Given a list of lists l,
+
+flat_list = [item for sublist in l for item in sublist]
+
+which means:
+
+flat_list = []
+for sublist in l:
+    for item in sublist:
+        flat_list.append(item)
+
+is faster than the shortcuts posted so far. (l is the list to flatten.)
+
+Here is the corresponding function:
+
+flatten = lambda l: [item for sublist in l for item in sublist]
+
+import itertools
+list2d = [[1,2,3], [4,5,6], [7], [8,9]]
+merged = list(itertools.chain(*list2d))
+or
+import itertools
+list2d = [[1,2,3], [4,5,6], [7], [8,9]]
+merged = list(itertools.chain.from_iterable(list2d))
+
+
+
+Don't reinvent the wheel if you use Django:
+
+>>> from django.contrib.admin.utils import flatten
+>>> l = [[1,2,3], [4,5], [6]]
+>>> flatten(l)
+>>> [1, 2, 3, 4, 5, 6]
+
+...Pandas:
+
+>>> from pandas.core.common import flatten
+>>> list(flatten(l))
+
+...Itertools:
+
+>>> import itertools
+>>> flatten = itertools.chain.from_iterable
+>>> list(flatten(l))
+
+...Matplotlib
+
+>>> from matplotlib.cbook import flatten
+>>> list(flatten(l))
+
+...Unipath:
+
+>>> from unipath.path import flatten
+>>> list(flatten(l))
+
+...Setuptools:
+
+>>> from setuptools.namespaces import flatten
+>>> list(flatten(l))
+
+from functools import reduce #python 3
+
+>>> l = [[1,2,3],[4,5,6], [7], [8,9]]
+>>> reduce(lambda x,y: x+y,l)
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+
+A faster way to do the reduce version would be
+
+>>> import operator
+>>> l = [[1,2,3],[4,5,6], [7], [8,9]]
+>>> reduce(operator.concat, l)
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+
